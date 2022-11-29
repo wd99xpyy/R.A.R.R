@@ -12,8 +12,12 @@ public class GameManager : MonoBehaviour
     public Camera theCamera;
 
     public GameObject myBag;
+    public GameObject device;
     public GameObject map;
     public GameObject directory;
+    public GameObject introMessage;
+    public bool introMessageIsOpen;
+    public bool deviceIsOpen;
     public bool myBagIsOpen;
     public bool mapIsOpen;
     public bool directoryIsOpen;
@@ -23,6 +27,15 @@ public class GameManager : MonoBehaviour
     {
         theCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
 
+        StartCoroutine(showIntroMessage(3));
+
+    }
+
+    IEnumerator showIntroMessage(float duration)
+    { 
+        // waits here
+        yield return new WaitForSeconds(duration);
+        introMessage.SetActive(introMessageIsOpen);
     }
 
     // Update is called once per frame
@@ -40,7 +53,22 @@ public class GameManager : MonoBehaviour
         {
             OpenDirectory();
         }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            OpenDevice();
+        }
 
+    }
+
+     public void OpenIntroMessage()
+    {
+        introMessageIsOpen = !introMessageIsOpen;
+        introMessage.SetActive(introMessageIsOpen);
+    }
+     public void OpenDevice()
+    {
+        deviceIsOpen = !deviceIsOpen;
+        device.SetActive(deviceIsOpen);
     }
     public void OpenMyBag()
     {
